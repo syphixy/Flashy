@@ -173,16 +173,17 @@ struct FlashcardSetView: View {
                     //                    if let unwrappedCard = card {
                     //                        //Text(unwrappedCard.name)
                     //                    }
-                    if let card = set.cards?.allObjects as? [FlashCardData] {
-                        ForEach(card, id: \.self) { card in
+                    
+                    
                             VStack {
-                                //Text(card.count.description)
+                                Text(set.cardsArray.count.description)
                                 SingleFlashCard(card: card,
                                                 removal: {
-                                    print("Removing card with animation")
+                                    
                                     withAnimation {
                                         removeCard(card)
                                     }
+                                    print("Removing card with animation")
                                 }, isLearned: $isLearned,
                                                 isThink: $isThink,
                                                 isHard: $isHard,
@@ -192,8 +193,8 @@ struct FlashcardSetView: View {
                             .onAppear {
                                 currentlySelectedCard = card
                             }
-                        }
-                    }
+                        
+                    
                 }
                 
                 NavigationLink(destination: EditFlashCardView(dataController: dataController, set: set), isActive: $isEdited) {
@@ -230,8 +231,10 @@ struct FlashcardSetView: View {
                 //                            removalLogic(at: index)
                 //                            print("Card removed")
                 //                        }
-                currentlySelectedCard?.cardStatus = 1
                 
+                currentlySelectedCard?.cardStatus = 1
+                removeCard(currentlySelectedCard)
+                print("Card removed animation")
                 //                // Toggle the isDisplayed property
                 //                if let index = displayedCards.firstIndex(where: { $0.id == currentlySelectedCard?.id }) {
                 //                    displayedCards[index].isDisplayed.toggle()
@@ -297,6 +300,9 @@ struct FlashcardSetView: View {
             dataController.save()
         }
     }
+//    func removeMethod(at index: Int) {
+//        set.cardsArray.remove(at: index)
+//    }
 }
 //struct FlashcardSetView_Previews: PreviewProvider {
 //    static var previews: some View {
